@@ -18,7 +18,10 @@ from urllib.parse import urlparse
 TASK_HEADER_RE = re.compile(r"^\s*(\d+)\)\s*-+")
 KV_RE = re.compile(r"^\s*([^:]+):\s*(.*)$")
 CPU_RES_RE = re.compile(r"^([0-9]*\.?[0-9]+)\s*CPUs?$", re.IGNORECASE)
-GPU_RES_RE = re.compile(r"^([0-9]*\.?[0-9]+)\s*(.*?)\s*GPUs?$", re.IGNORECASE)
+GPU_RES_RE = re.compile(
+    r"^([0-9]*\.?[0-9]+)\s*(.*?)\s*GPUs?(?:\s*\([^)]*\))?$",
+    re.IGNORECASE,
+)
 
 
 @dataclass
