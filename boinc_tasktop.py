@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 TASK_HEADER_RE = re.compile(r"^\s*(\d+)\)\s*-+")
 KV_RE = re.compile(r"^\s*([^:]+):\s*(.*)$")
 CPU_RES_RE = re.compile(r"^([0-9]*\.?[0-9]+)\s*CPUs?$", re.IGNORECASE)
-GPU_RES_RE = re.compile(r"^([0-9]*\.?[0-9]+)\s*(.+?)\s*GPUs?$", re.IGNORECASE)
+GPU_RES_RE = re.compile(r"^([0-9]*\.?[0-9]+)\s*(.*?)\s*GPUs?$", re.IGNORECASE)
 
 
 @dataclass
@@ -72,6 +72,8 @@ class Task:
             if gpu_match:
                 count = float(gpu_match.group(1))
                 gpu_type = re.sub(r"\s+", " ", gpu_match.group(2).strip())
+                if not gpu_type:
+                    gpu_type = "GPU"
                 gpu_by_type[gpu_type] = gpu_by_type.get(gpu_type, 0.0) + count
 
         gpu_total = sum(gpu_by_type.values())
